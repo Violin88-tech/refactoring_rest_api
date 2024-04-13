@@ -1,0 +1,4 @@
+curlify
+allure-pytest~=2.13.4
+pytest
+requests
