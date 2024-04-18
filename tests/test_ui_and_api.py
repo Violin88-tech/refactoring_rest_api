@@ -3,9 +3,24 @@ import requests
 import allure
 from selene import browser, have
 
+def test_login():
+    with allure.step("Get user cookie"):
+        response = requests.post(DOMAIN_URL + "/login",
+                                 data={"Email": LOGIN, "Password": PASSWORD},
+                                 allow_redirects=False)
+        cookie = response.cookies.get("NOPCOMMERCE.AUTH")
+        browser.open('')
+        browser.driver.add_cookie({"name": "NOPCOMMERCE.AUTH", "value": cookie})
+
+    with allure.step('Open login page'):
+        browser.open('')
+        browser.driver.add_cookie({'name': 'NOPCOMMERCE.AUTH', 'value': cookie})
+        browser.open('')
+        browser.element('.account').should(have.text(LOGIN))
+
 
 def test_add_product():
-    with allure. step("Get user cookie"):
+    with allure.step("Get user cookie"):
         response = requests.post(DOMAIN_URL + "/login",
                                  data={"Email": LOGIN, "Password": PASSWORD},
                                  allow_redirects=False)
@@ -26,6 +41,7 @@ def test_add_product():
         browser.element('[name="removefromcart"]').click()
         browser.element('[name="updatecart"]').click()
         browser.element('.order-summary-content').should(have.text('Your Shopping Cart is empty!'))
+
 
 
 
