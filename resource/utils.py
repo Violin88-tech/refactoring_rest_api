@@ -5,8 +5,6 @@ import requests
 from allure_commons._allure import step
 from allure_commons.types import AttachmentType
 
-
-
 def post_reqres(url, **kwargs):
     base_url = "https://demowebshop.tricentis.com"
     with step(f"POST {url}"):
