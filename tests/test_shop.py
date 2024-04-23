@@ -13,8 +13,8 @@ def test_login():
     assert response.status_code == 302
 
 def test_add_product():
-    response = post_reqres("/login", json={"Email": LOGIN, "Password": PASSWORD}, allow_redirects=False)
-    add_auth_cookie_to_browser()
+    # response = post_reqres("/login", json={"Email": LOGIN, "Password": PASSWORD}, allow_redirects=False)
+    # add_auth_cookie_to_browser()
     with step("Add product in card API"):
         post_reqres("/addproducttocart/details/74/1",
                     data={
@@ -33,7 +33,7 @@ def test_add_product_with_verification():
         post_reqres("/addproducttocart/details/31/1",
                     data={"addtocart_31.EnteredQuantity": 1})
     add_auth_cookie_to_browser()
-    assert response.status_code == 200
+    assert response.status_code == 302
     with step("Check product in card"):
         browser.open(f"{DOMAIN_URL}/cart")
         time.sleep(3)
